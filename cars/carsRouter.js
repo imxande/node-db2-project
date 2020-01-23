@@ -19,10 +19,25 @@ const carsDB = knex(knexConfiguration);
 // using express to create a router
 const router = express.Router();
 
-// checking if router works
-router.get('/', (req, res) =>{
-    res.send('Hello from the router!')
+// // checking if router works
+// router.get('/', (req, res) =>{
+//     res.send('Hello from the router!')
+// });
+
+// I need to get all cars here
+
+router.get("/", (req, res) => {
+    //    select  *   from  cars
+    // db.select('*').from('cars').then().catch();
+    carsDB("cars")
+        .then(response => {
+            res.json(response);
+        })
+        .catch(err => {
+            res.status(500).json({ message: "Failed to retrieve all the cars" });
+        });
 });
+
 
 // exporting the router
 module.exports = router;
