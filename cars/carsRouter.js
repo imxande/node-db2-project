@@ -55,5 +55,22 @@ router.get("/:id", (req, res) => {
         });
 });
 
+// create cars
+router.post("/", (req, res) => {
+    const carsData = req.body;
+    carsDB("fruits")
+        .insert(carsData) // with SQLite, by default it returns an array with the last id
+        .then(ids => {
+            carsDB("fruits")
+                .where({ id: ids[0] })
+                .then(response => {
+                    res.status(201).json(response);
+                });
+        })
+        .catch(err => {
+            console.log("POST error", err);
+            res.status(500).json({ message: "Failed to store data" });
+        });
+});
 // exporting the router
 module.exports = router;
