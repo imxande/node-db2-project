@@ -58,10 +58,10 @@ router.get("/:id", (req, res) => {
 // create cars
 router.post("/", (req, res) => {
     const carsData = req.body;
-    carsDB("fruits")
+    carsDB("cars")
         .insert(carsData) // with SQLite, by default it returns an array with the last id
         .then(ids => {
-            carsDB("fruits")
+            carsDB("cars")
                 .where({ id: ids[0] })
                 .then(response => {
                     res.status(201).json(response);
